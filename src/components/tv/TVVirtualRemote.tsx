@@ -38,16 +38,15 @@ function getFocusableElements() {
 function focusElement(element: HTMLElement) {
   element.focus({ preventScroll: true });
 
-  const isInFixedChrome = Boolean(element.closest('header, [data-tv-remote]'));
+  const isInFixedChrome = Boolean(element.closest('header, [data-tv-remote], [data-tv-player-control], [data-tv-player-root]'));
 
-  // 先让浏览器处理横向滚动行，再额外修正固定顶部导航遮挡。
-  element.scrollIntoView({
-    block: isInFixedChrome ? 'nearest' : 'nearest',
-    inline: 'nearest',
-    behavior: 'smooth',
-  });
-
+  // 播放页浮层是 fixed/absolute，不能 scrollIntoView，否则会把全屏播放器滚出视口。
   if (!isInFixedChrome) {
+    element.scrollIntoView({
+      block: 'nearest',
+      inline: 'nearest',
+      behavior: 'smooth',
+    });
     window.requestAnimationFrame(() => {
       const rect = element.getBoundingClientRect();
       const safeTop = 150;
@@ -218,8 +217,14 @@ export default function TVVirtualRemote() {
       }
 
       if (event.key === 'Escape') {
-        event.preventDefault();
-        window.history.back();
+        const path = window.location.pathname;
+        const playerPage = path === '/tv/play' || path === '/tv/live/play';
+        // 播放页需要优先用返回键关闭选集/频道面板，不能被全局遥控器直接 history.back。
+        if (!playerPage) {
+          event.preventDefault();
+          window.history.back();
+        }
+        return;
       }
 
       if (event.key === 'Home') {

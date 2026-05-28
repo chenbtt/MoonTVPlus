@@ -50,7 +50,7 @@ export default function TVLoginPage() {
     return () => window.clearInterval(timer);
   }, [qr, redirect, router]);
 
-  const qrImg = qr ? `https://api.qrserver.com/v1/create-qr-code/?size=360x360&margin=16&data=${encodeURIComponent(qr.qrUrl)}` : '';
+  const qrImg = qr ? `/api/auth/qr/image?data=${encodeURIComponent(qr.qrUrl)}` : '';
 
   return (
     <TVLayout>

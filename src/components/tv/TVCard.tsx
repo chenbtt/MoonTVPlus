@@ -10,7 +10,7 @@ import { TVItem } from './types';
 export default function TVCard({ item }: { item: TVItem }) {
   const router = useRouter();
   const poster = item.poster ? processImageUrl(item.poster) : '';
-  const playUrl = item.href || `/tv/play?title=${encodeURIComponent(item.title)}${
+  const playUrl = item.href || `/tv/detail?title=${encodeURIComponent(item.title)}${
     item.year ? `&year=${encodeURIComponent(item.year)}` : ''
   }${item.type ? `&stype=${item.type}` : ''}`;
 

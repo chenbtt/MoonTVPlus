@@ -280,8 +280,9 @@ div[data-media-provider] video {
   scroll-margin-left: 48px;
   scroll-margin-right: 48px;
   transform-origin: center;
+  scale: 1;
   transition:
-    transform 180ms ease,
+    scale 180ms ease,
     background-color 180ms ease,
     color 180ms ease,
     box-shadow 180ms ease,
@@ -292,7 +293,7 @@ div[data-media-provider] video {
 .tv-focusable:focus-visible,
 .tv-focused {
   outline: none !important;
-  transform: scale(1.055);
+  scale: 1.055;
   background-color: rgba(15, 23, 42, 0.96) !important;
   color: #ffffff !important;
   box-shadow:
@@ -314,7 +315,7 @@ div[data-media-provider] video {
 }
 
 .tv-focusable:active {
-  transform: scale(1.03);
+  scale: 1.03;
 }
 
 @media (prefers-reduced-motion: reduce) {
